@@ -12,11 +12,18 @@ import ShopNavigator from './src/navigation/ShopNavigator.js';
 import {configureStore} from '@reduxjs/toolkit';
 import products from './src/store/products.js';
 import {Provider} from 'react-redux';
+import cart from './src/store/cart.js';
+import {createSerializableStateInvariantMiddleware} from '@reduxjs/toolkit';
 
 const store = configureStore({
   reducer: {
     products: products,
+    cart: cart,
   },
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    createSerializableStateInvariantMiddleware(),
+  ],
 });
 
 const App = () => {
