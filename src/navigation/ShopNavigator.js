@@ -19,12 +19,8 @@ import {
 import Icon from '../components/core/Icon';
 import {height, primary} from '../constants';
 
-const ProductStackNavigator = createNativeStackNavigator();
-
-export const ProductNavigator = () => {
-  const navigation = useNavigation();
-
-  const headerStyle = {
+const headerStyle = navigation => {
+  return {
     headerRight: () => (
       <TouchableOpacity
         style={styles.headerIcon}
@@ -35,8 +31,15 @@ export const ProductNavigator = () => {
     ),
     headerTintColor: primary,
   };
+};
+
+const ProductStackNavigator = createNativeStackNavigator();
+
+export const ProductNavigator = () => {
+  const navigation = useNavigation();
+
   return (
-    <ProductStackNavigator.Navigator screenOptions={headerStyle}>
+    <ProductStackNavigator.Navigator screenOptions={headerStyle(navigation)}>
       <ProductStackNavigator.Screen
         component={ProductOverviewScreen}
         name={PRODUCT_OVERVIEW}
@@ -53,8 +56,10 @@ export const ProductNavigator = () => {
 const OrdersStackNavigator = createNativeStackNavigator();
 
 export const OrdersNavigator = () => {
+  const navigation = useNavigation();
+
   return (
-    <OrdersStackNavigator.Navigator>
+    <OrdersStackNavigator.Navigator screenOptions={headerStyle(navigation)}>
       <OrdersStackNavigator.Screen component={OrdersScreen} name={ORDERS} />
     </OrdersStackNavigator.Navigator>
   );

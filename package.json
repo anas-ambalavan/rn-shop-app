@@ -13,6 +13,7 @@
     "@react-navigation/bottom-tabs": "^6.5.5",
     "@react-navigation/native": "^6.1.4",
     "@react-navigation/native-stack": "^6.9.10",
+    "@reduxjs/toolkit": "^1.9.3",
     "moment": "^2.29.4",
     "react": "18.0.0",
     "react-native": "0.69.0",
