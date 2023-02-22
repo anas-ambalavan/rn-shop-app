@@ -1,14 +1,55 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
-const ProductDetailScreen = () => {
+import {primary} from '../../constants';
+
+const ProductDetailScreen = ({route, navigation}) => {
+  const productId = route.params ? route.params.productId : null;
+  const selectedProduct = useSelector(state =>
+    state.products.products.find(prod => prod.id === productId),
+  );
+
+  const dispatch = useDispatch();
+
   return (
-    <View>
-      <Text>ProductDetailScreen</Text>
-    </View>
+    <ScrollView>
+      <Image style={styles.image} source={{uri: selectedProduct.images[0]}} />
+      <View style={styles.actions}>
+        <Button
+          color={primary}
+          title="Add To Cart"
+          onPress={() => {
+            // add to cart funcn
+          }}
+        />
+      </View>
+      <Text style={styles.price}>${selectedProduct.price}</Text>
+      <Text style={styles.description}>{selectedProduct.description}</Text>
+    </ScrollView>
   );
 };
 
 export default ProductDetailScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: '100%',
+    height: 300,
+  },
+  actions: {
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  price: {
+    fontSize: 20,
+    color: '#888',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  description: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginHorizontal: 20,
+  },
+});
