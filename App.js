@@ -9,13 +9,15 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Icon from './src/components/core/Icon.js';
+import ShopNavigator from './src/navigation/ShopNavigator.js';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Welcome to the Shop!</Text>
-      <Icon name="shopping-cart-2-fill" size={20} />
-    </SafeAreaView>
+    // <SafeAreaView style={styles.container}>
+    //   <Text>Welcome to the Shop!</Text>
+    //   <Icon name="shopping-cart-2-fill" size={20} />
+    // </SafeAreaView>
+    <ShopNavigator />
   );
 };
 
