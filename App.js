@@ -7,19 +7,17 @@
  */
 
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import ShopNavigator from './src/navigation/ShopNavigator.js';
 import {configureStore} from '@reduxjs/toolkit';
-import products from './src/store/products.js';
 import {Provider} from 'react-redux';
-import cart from './src/store/cart.js';
 import {createSerializableStateInvariantMiddleware} from '@reduxjs/toolkit';
 
+import ShopNavigator from './src/navigation/ShopNavigator.js';
+import cart from './src/store/cart.js';
+import products from './src/store/products.js';
+import orders from './src/store/orders.js';
+
 const store = configureStore({
-  reducer: {
-    products: products,
-    cart: cart,
-  },
+  reducer: {products, cart, orders},
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware(),
     createSerializableStateInvariantMiddleware(),
@@ -33,13 +31,5 @@ const App = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

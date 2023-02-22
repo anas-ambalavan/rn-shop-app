@@ -12,7 +12,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import CartItem from '../../components/shop/CartItem';
 import {primary} from '../../constants';
 import Card from '../../components/core/Card';
-import {removeItem} from '../../store/cart';
+import {removeItem, emptyCart} from '../../store/cart';
+import {addOrder} from '../../store/orders';
 
 const CartScreen = props => {
   const [isLoading, setisLoading] = useState(false);
@@ -23,11 +24,11 @@ const CartScreen = props => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
       transformedCartItems.push({
-        productId: key,
-        productTitle: state.cart.items[key].title,
-        productPrice: state.cart.items[key].price,
+        id: key,
+        title: state.cart.items[key].title,
+        price: state.cart.items[key].price,
         quantity: state.cart.items[key].quantity,
-        sum: state.cart.items[key].totalPrice,
+        totalPrice: state.cart.items[key].totalPrice,
       });
     }
     return transformedCartItems.sort((a, b) =>
@@ -39,7 +40,15 @@ const CartScreen = props => {
 
   const sendOrderHandler = async () => {
     setisLoading(true);
-    // await dispatch(orderActions.addOrder(cartItems, cartTotalAmount));
+    await dispatch(
+      addOrder({
+        id: new Date().toString(),
+        items: cartItems,
+        amount: cartTotalAmount,
+        date: new Date().toISOString(),
+      }),
+    );
+    await dispatch(emptyCart());
     setisLoading(false);
   };
 
@@ -57,7 +66,7 @@ const CartScreen = props => {
         ) : (
           <Button
             title="Order Now"
-            // onPress={sendOrderHandler}
+            onPress={sendOrderHandler}
             color="red"
             disabled={cartItems.length === 0}
           />
@@ -65,15 +74,15 @@ const CartScreen = props => {
       </Card>
       <FlatList
         data={cartItems}
-        keyExtractor={items => items.productId.toString()}
+        keyExtractor={items => items.id.toString()}
         renderItem={itemData => (
           <CartItem
             quantity={itemData.item.quantity}
-            title={itemData.item.productTitle}
-            amount={itemData.item.sum}
+            title={itemData.item.title}
+            amount={itemData.item.totalPrice}
             deletable
             onRemove={() => {
-              dispatch(removeItem(itemData.item.productId));
+              dispatch(removeItem(itemData.item.id));
             }}
           />
         )}

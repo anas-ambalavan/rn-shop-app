@@ -36,8 +36,6 @@ const ProductOverviewScreen = () => {
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
 
-  // console.log(products);
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', loadProducts);
 

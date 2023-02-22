@@ -3,6 +3,7 @@ import {Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {primary} from '../../constants';
+import {addItem} from '../../store/cart';
 
 const ProductDetailScreen = ({route, navigation}) => {
   const productId = route.params ? route.params.productId : null;
@@ -20,7 +21,7 @@ const ProductDetailScreen = ({route, navigation}) => {
           color={primary}
           title="Add To Cart"
           onPress={() => {
-            // add to cart funcn
+            dispatch(addItem(selectedProduct));
           }}
         />
       </View>
