@@ -1,8 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer, useRoute} from '@react-navigation/native';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 
 import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
@@ -18,15 +19,20 @@ import {
 } from './Constants';
 import Icon from '../components/core/Icon';
 import {height, primary} from '../constants';
+import {selectCartTotalQuantity} from '../store/cart';
 
-const headerStyle = navigation => {
+const headerStyle = (navigation, totalQuantity = 0, cart = false) => {
   return {
     headerRight: () => (
       <TouchableOpacity
         style={styles.headerIcon}
         onPress={() => navigation.navigate(CART)}>
-        <Icon name="shopping-cart-2-line" size={20} color={primary} />
-        <Text>1</Text>
+        <Icon
+          name={cart ? 'shopping-cart-2-fill' : 'shopping-cart-2-line'}
+          size={20}
+          color={primary}
+        />
+        <Text>{totalQuantity}</Text>
       </TouchableOpacity>
     ),
     headerTintColor: primary,
@@ -35,11 +41,12 @@ const headerStyle = navigation => {
 
 const ProductStackNavigator = createNativeStackNavigator();
 
-export const ProductNavigator = () => {
-  const navigation = useNavigation();
+export const ProductNavigator = ({navigation}) => {
+  const totalQuantity = useSelector(selectCartTotalQuantity);
 
   return (
-    <ProductStackNavigator.Navigator screenOptions={headerStyle(navigation)}>
+    <ProductStackNavigator.Navigator
+      screenOptions={headerStyle(navigation, totalQuantity)}>
       <ProductStackNavigator.Screen
         component={ProductOverviewScreen}
         name={PRODUCT_OVERVIEW}
@@ -48,18 +55,23 @@ export const ProductNavigator = () => {
         component={ProductDetailScreen}
         name={PRODUCT_DETAIL}
       />
-      <ProductStackNavigator.Screen component={CartScreen} name={CART} />
+      <ProductStackNavigator.Screen
+        component={CartScreen}
+        name={CART}
+        options={headerStyle(navigation, totalQuantity, true)}
+      />
     </ProductStackNavigator.Navigator>
   );
 };
 
 const OrdersStackNavigator = createNativeStackNavigator();
 
-export const OrdersNavigator = () => {
-  const navigation = useNavigation();
+export const OrdersNavigator = ({navigation}) => {
+  const totalQuantity = useSelector(selectCartTotalQuantity);
 
   return (
-    <OrdersStackNavigator.Navigator screenOptions={headerStyle(navigation)}>
+    <OrdersStackNavigator.Navigator
+      screenOptions={headerStyle(navigation, totalQuantity)}>
       <OrdersStackNavigator.Screen component={OrdersScreen} name={ORDERS} />
     </OrdersStackNavigator.Navigator>
   );

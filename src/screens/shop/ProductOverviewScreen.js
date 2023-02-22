@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchProducts} from '../../store/products';
 import ProductItem from '../../components/shop/ProductItem';
 import {primary} from '../../constants';
+import {addItem} from '../../store/cart';
 
 const ProductOverviewScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +35,6 @@ const ProductOverviewScreen = () => {
     }
     setIsRefreshing(false);
   }, [dispatch, setIsLoading, setError]);
-
-  // console.log(products);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', loadProducts);
@@ -109,7 +108,13 @@ const ProductOverviewScreen = () => {
             color={primary}
             title="To Cart"
             onPress={() => {
-              // dispatch(cartActions.addToCart(itemData.item));
+              dispatch(
+                addItem({
+                  id: itemData.item.id,
+                  title: itemData.item.title,
+                  price: itemData.item.price,
+                }),
+              );
             }}
           />
         </ProductItem>
