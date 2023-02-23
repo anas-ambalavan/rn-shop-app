@@ -1,3 +1,4 @@
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -6,10 +7,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {PRODUCT_DETAIL} from '../../navigation/Constants';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {PRODUCT_DETAIL} from '../../navigation/Constants';
 import {fetchProducts} from '../../store/products';
 import ProductItem from '../../components/shop/ProductItem';
 import {primary} from '../../constants';

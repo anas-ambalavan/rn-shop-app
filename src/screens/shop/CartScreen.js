@@ -12,13 +12,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import CartItem from '../../components/shop/CartItem';
 import {primary} from '../../constants';
 import Card from '../../components/core/Card';
-import {removeItem, emptyCart} from '../../store/cart';
+import {removeItem, emptyCart, selectCartTotalPrice} from '../../store/cart';
 import {addOrder} from '../../store/orders';
 
 const CartScreen = props => {
   const [isLoading, setisLoading] = useState(false);
 
-  const cartTotalAmount = useSelector(state => state.cart.totalPrice);
+  const cartTotalAmount = useSelector(selectCartTotalPrice);
 
   const cartItems = useSelector(state => {
     const transformedCartItems = [];
