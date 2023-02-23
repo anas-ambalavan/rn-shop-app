@@ -1,14 +1,22 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer, useRoute} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 
-import ProductOverviewScreen from '../screens/shop/ProductOverviewScreen';
-import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
-import CartScreen from '../screens/shop/CartScreen';
-import OrdersScreen from '../screens/shop/OrdersScreen';
+import ProductOverviewScreen, {
+  screenOptions as ProductOverViewScreenOptions,
+} from '../screens/shop/ProductOverviewScreen';
+import ProductDetailScreen, {
+  screenOptions as ProductDetailScreenOptions,
+} from '../screens/shop/ProductDetailScreen';
+import CartScreen, {
+  screenOptions as CartScreenOptions,
+} from '../screens/shop/CartScreen';
+import OrdersScreen, {
+  screenOptions as OrdersScreenOptions,
+} from '../screens/shop/OrdersScreen';
 import {
   PRODUCT_OVERVIEW,
   PRODUCT_DETAIL,
@@ -50,15 +58,20 @@ export const ProductNavigator = ({navigation}) => {
       <ProductStackNavigator.Screen
         component={ProductOverviewScreen}
         name={PRODUCT_OVERVIEW}
+        options={ProductOverViewScreenOptions}
       />
       <ProductStackNavigator.Screen
         component={ProductDetailScreen}
         name={PRODUCT_DETAIL}
+        options={ProductDetailScreenOptions}
       />
       <ProductStackNavigator.Screen
         component={CartScreen}
         name={CART}
-        options={headerStyle(navigation, totalQuantity, true)}
+        options={{
+          ...CartScreenOptions,
+          ...headerStyle(navigation, totalQuantity, true),
+        }}
       />
     </ProductStackNavigator.Navigator>
   );
@@ -72,7 +85,11 @@ export const OrdersNavigator = ({navigation}) => {
   return (
     <OrdersStackNavigator.Navigator
       screenOptions={headerStyle(navigation, totalQuantity)}>
-      <OrdersStackNavigator.Screen component={OrdersScreen} name={ORDERS} />
+      <OrdersStackNavigator.Screen
+        component={OrdersScreen}
+        name={ORDERS}
+        options={OrdersScreenOptions}
+      />
     </OrdersStackNavigator.Navigator>
   );
 };

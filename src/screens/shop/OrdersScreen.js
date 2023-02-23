@@ -3,9 +3,10 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import OrderItem from '../../components/shop/OrderItem';
+import {selectAllOrders} from '../../store/orders';
 
 const OrdersScreen = props => {
-  const orders = useSelector(state => state.orders.orders);
+  const orders = useSelector(selectAllOrders);
 
   if (orders.length === 0) {
     return (
