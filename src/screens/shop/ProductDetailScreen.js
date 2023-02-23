@@ -37,6 +37,14 @@ const ProductDetailScreen = ({route}) => {
 
 export default ProductDetailScreen;
 
+export const screenOptions = navData => {
+  return {
+    headerTitle: navData.route.params
+      ? navData.route.params.productTitle
+      : null,
+  };
+};
+
 const styles = StyleSheet.create({
   image: {
     width: '100%',

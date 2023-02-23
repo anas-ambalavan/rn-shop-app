@@ -125,6 +125,12 @@ const ProductOverviewScreen = () => {
 
 export default ProductOverviewScreen;
 
+export const screenOptions = navData => {
+  return {
+    headerTitle: 'All Products',
+  };
+};
+
 const styles = StyleSheet.create({
   centered: {
     flex: 1,
